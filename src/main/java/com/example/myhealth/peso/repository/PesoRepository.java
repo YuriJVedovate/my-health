@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface PesoRepository extends JpaRepository<Peso, Integer> {
 
-    @Query(value = "SELECT TOP(10) * FROM Peso p where id_Usuario = ?1 ORDER by data_Criacao desc", nativeQuery = true)
+    @Query(value = "SELECT TOP(10) * FROM Peso p where usuario_id = ?1 ORDER by data_criacao desc", nativeQuery = true)
     List<Peso> historicoPeso(int idUsuario);
 }

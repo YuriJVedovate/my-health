@@ -12,12 +12,12 @@ public class Peso {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_Peso")
+    @Column(name = "id_peso")
     private Integer idPeso;
 
     private Double valor;
 
-    @Column(name = "data_Criacao")
+    @Column(name = "data_criacao")
     private LocalDateTime dataCriacao;
 
     @Column(name = "usuario_id")
@@ -31,12 +31,12 @@ public class Peso {
         this.idPeso = idPeso;
     }
 
-    public Double getvalor() {
+    public Double getValor() {
         return valor;
     }
 
-    public void setvalor(Double valor) {
-        valor = valor;
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
 
     public LocalDateTime getDataCriacao() {

@@ -99,19 +99,20 @@ public class UsuarioController {
     public ResponseEntity alterUsuario(@RequestBody @Valid Usuario usuario, @RequestParam int id) {
         Usuario usuarioPut = repository.getOne(id);
         if (repository.existsById(id)) {
+            usuarioPut.setNome(usuario.getNome());
             usuarioPut.setPeso(usuario.getPeso());
             usuarioPut.setAltura(usuario.getAltura());
             usuarioPut.setDataNascimento(usuario.getDataNascimento());
             usuarioPut.setSenha(usuario.getSenha());
             usuarioPut.setEmail(usuario.getEmail());
             usuarioPut.setId(id);
-            repository.save(usuarioPut);
 
             Peso peso = new Peso();
-            peso.setvalor(usuario.getPeso());
+            peso.setValor(usuario.getPeso());
             peso.setDataCriacao(LocalDateTime.now());
             peso.setIdUsuario(id);
 
+            repository.save(usuarioPut);
             pesoRepository.save(peso);
 
             return ResponseEntity.status(200).body(usuarioPut);

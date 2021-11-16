@@ -44,7 +44,11 @@ public class DashboardController {
         LocalDateTime dtStart = data.atStartOfDay();
         LocalDateTime dtFinish = data.atTime(LocalTime.MAX);
         Conversao conveter = new Conversao();
+
         if (!(data.isAfter(LocalDate.now())) && repositoryUsuario.existsById(idUsuario) && repositoryRefeicaoAlimento.refeicaoExisteNaData(dtStart, dtFinish, idCategoriaRefeicao, idUsuario)) {
+
+            if (repositoryRefeicaoAlimento.somaColesterol(dtStart, dtFinish, idUsuario, idCategoriaRefeicao) / conveter.getPesoColesterol() < 0)return ResponseEntity.notFound().build();
+
             Gramas gramas = new Gramas(
                     repositoryRefeicaoAlimento.somaColesterol(dtStart, dtFinish, idUsuario, idCategoriaRefeicao) / conveter.getPesoColesterol(),
                     repositoryRefeicaoAlimento.somaCarboidrato(dtStart, dtFinish, idUsuario, idCategoriaRefeicao) / conveter.getPesoCarboidrato(),
@@ -68,10 +72,14 @@ public class DashboardController {
         if (!(data.isAfter(LocalDate.now()) && repositoryUsuario.existsById(idUsuario))) {
             Usuario user = repositoryUsuario.getOne(idUsuario);
             CaloriasDiaResponse response = new CaloriasDiaResponse();
+
+            if (repositoryRefeicaoAlimento.somaCaloriasDia(dtStart, dtFinish, idUsuario) == null) return ResponseEntity.status(404).build();
+
             response.setConsumoTotalDia(((11.65 * user.getPeso()) + (3.42 * user.getAltura()) - (5.72 * (LocalDate.now().getYear() - user.getDataNascimento().getYear()))) * 1.3);
             response.setConsumidoDia(repositoryRefeicaoAlimento.somaCaloriasDia(dtStart, dtFinish, idUsuario));
 
             return ResponseEntity.status(200).body(response);
+
         } else {
             return ResponseEntity.notFound().build();
         }
