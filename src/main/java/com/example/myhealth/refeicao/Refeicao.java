@@ -31,10 +31,6 @@ public class Refeicao {
     @ManyToOne
     private Usuario usuario;
 
-    public Refeicao() {
-        this.dataRefeicao = LocalDateTime.now();
-    }
-
     public Integer getIdRefeicao() {
         return idRefeicao;
     }
