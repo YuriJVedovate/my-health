@@ -39,20 +39,20 @@ public class Refeicao {
         this.idRefeicao = idRefeicao;
     }
 
-    public CategoriaRefeicao getCategoriaRefeicao() {
-        return categoriaRefeicao;
-    }
-
-    public void setCategoriaRefeicao(CategoriaRefeicao categoriaRefeicao) {
-        this.categoriaRefeicao = categoriaRefeicao;
-    }
-
     public LocalDateTime getDataRefeicao() {
         return dataRefeicao;
     }
 
     public void setDataRefeicao(LocalDateTime dataRefeicao) {
         this.dataRefeicao = dataRefeicao;
+    }
+
+    public CategoriaRefeicao getCategoriaRefeicao() {
+        return categoriaRefeicao;
+    }
+
+    public void setCategoriaRefeicao(CategoriaRefeicao categoriaRefeicao) {
+        this.categoriaRefeicao = categoriaRefeicao;
     }
 
     public Usuario getUsuario() {
