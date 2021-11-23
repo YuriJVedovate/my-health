@@ -82,7 +82,7 @@ public class UsuarioController {
     }
 
     // @CrossOrigin(origins = "http://54.173.23.9/")
-    @GetMapping("/imagem/{id}")
+    @GetMapping("/imagem/{id}.jpg")
     public ResponseEntity getProdutoImagem2(@PathVariable int id) {
         Usuario imagemOptional = repository.getOne(id);
 
