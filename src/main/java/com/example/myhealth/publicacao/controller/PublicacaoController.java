@@ -4,22 +4,17 @@ import com.example.myhealth.objetos.PilhaObj;
 import com.example.myhealth.publicacao.Publicacao;
 import com.example.myhealth.publicacao.repository.PublicacaoRepository;
 import com.example.myhealth.publicacao.response.PublicacaoResponse;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.IOUtils;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import javax.validation.Valid;
-import java.awt.*;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,8 +66,8 @@ public class PublicacaoController {
         return ResponseEntity.status(201).build();
     }
 
-    // @CrossOrigin(origins = "http://54.173.23.9/")
-    @GetMapping("/imagem/{id}.jpg")
+
+    @GetMapping("/imagem/{id}")
     public ResponseEntity getProdutoImagem2(@PathVariable int id) {
         Publicacao imagemOptional = repository.getOne(id);
         byte[] imagem = imagemOptional.getImagem();
