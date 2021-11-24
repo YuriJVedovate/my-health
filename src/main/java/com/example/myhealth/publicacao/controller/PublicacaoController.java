@@ -6,11 +6,9 @@ import com.example.myhealth.publicacao.repository.PublicacaoRepository;
 import com.example.myhealth.publicacao.response.PublicacaoResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.misc.IOUtils;
 
 import javax.validation.Valid;
 import java.io.*;

@@ -2,7 +2,6 @@ package com.example.myhealth.usuario.controller;
 
 
 import com.example.myhealth.peso.Peso;
-import com.example.myhealth.peso.dto.PesoDto;
 import com.example.myhealth.peso.repository.PesoRepository;
 import com.example.myhealth.usuario.Usuario;
 import com.example.myhealth.usuario.repository.UsuarioRepository;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
