@@ -54,9 +54,8 @@ public class RefeicaoAlimentoController {
     public ResponseEntity getRefeicoesAlimentoDia(
             @RequestParam("data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data,
             @RequestParam Integer idUsuario, Integer idTipo) {
-        LocalDateTime dtStart = data.atStartOfDay();
-        if (!(data.isAfter(LocalDate.now())) && repositoryUsuario.existsById(idUsuario) && repository.refeicaoExisteNaData(dtStart, dtStart, idTipo, idUsuario)) {
-            List<RefeicaoAlimento> refeicaoAlimentos = repository.buscarTodasRefeicoesUsuarioByDay(dtStart, dtStart, idUsuario, idTipo);
+        if (!(data.isAfter(LocalDate.now())) && repositoryUsuario.existsById(idUsuario) && repository.refeicaoExisteNaData(data, idTipo, idUsuario)) {
+            List<RefeicaoAlimento> refeicaoAlimentos = repository.buscarTodasRefeicoesUsuarioByDay(data, idUsuario, idTipo);
             return ResponseEntity.status(200).body(
                     refeicaoAlimentos.stream().map(RefeicaoAlimentoResponse::new).collect(Collectors.toList()));
         } else {
