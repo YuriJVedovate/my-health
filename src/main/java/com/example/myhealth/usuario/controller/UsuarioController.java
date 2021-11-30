@@ -96,7 +96,7 @@ public class UsuarioController {
     @PutMapping()
     public ResponseEntity alterUsuario(@RequestBody @Valid Usuario usuario, @RequestParam int id) {
         Usuario usuarioPut = repository.getOne(id);
-        if (repository.existsById(id)) {
+            if (repository.existsById(id)) {
             usuarioPut.setNome(usuario.getNome());
             usuarioPut.setPeso(usuario.getPeso());
             usuarioPut.setAltura(usuario.getAltura());
@@ -113,7 +113,20 @@ public class UsuarioController {
             repository.save(usuarioPut);
             pesoRepository.save(peso);
 
-            return ResponseEntity.status(200).body(usuarioPut);
+            Usuario user = new Usuario();
+
+            user.setIdUsuario(usuario.getIdUsuario());
+            user.setNome(usuario.getNome());
+            user.setSenha(usuario.getSenha());
+            user.setEmail(usuario.getEmail());
+            user.setPeso(usuario.getPeso());
+            user.setAltura(usuario.getAltura());
+            user.setAutenticado(usuario.getAutenticado());
+            user.setDataNascimento(usuario.getDataNascimento());
+            user.setAvatar(usuarioPut.getAvatar());
+            user.setTipoUsuario(usuario.getTipoUsuario());
+
+            return ResponseEntity.status(200).body(user);
         }
         return ResponseEntity.status(404).build();
     }
