@@ -45,7 +45,7 @@ public class DashboardController {
         LocalDateTime dtFinish = data.atTime(LocalTime.MAX);
         Conversao conveter = new Conversao();
 
-        if (!(data.isAfter(LocalDate.now())) && repositoryUsuario.existsById(idUsuario) && repositoryRefeicaoAlimento.refeicaoExisteNaData(data, idCategoriaRefeicao, idUsuario)) {
+        if (repositoryUsuario.existsById(idUsuario) && repositoryRefeicaoAlimento.refeicaoExisteNaData(data, idCategoriaRefeicao, idUsuario)) {
 
             if (repositoryRefeicaoAlimento.somaColesterol(dtStart, dtFinish, idUsuario, idCategoriaRefeicao) / conveter.getPesoColesterol() < 0)return ResponseEntity.notFound().build();
 
@@ -94,7 +94,7 @@ public class DashboardController {
         LocalDateTime dtStart = dataInicio.atStartOfDay();
         LocalDateTime dtFinish = dataFim.atTime(LocalTime.MAX);
 
-        if (!(dataInicio.isAfter(LocalDate.now()) && dataFim.isAfter(LocalDate.now()) && repositoryUsuario.existsById(idUsuario))) {
+        if (dataFim.isAfter(LocalDate.now()) && repositoryUsuario.existsById(idUsuario)) {
             return ResponseEntity.status(200).body(repositoryRefeicaoAlimento.somaCaloriasDia(dtStart, dtFinish, idUsuario));
         } else {
             return ResponseEntity.notFound().build();
