@@ -10,15 +10,18 @@ import com.example.myhealth.usuario.request.UserDto;
 import com.example.myhealth.usuario.response.UsuarioEdit;
 import com.example.myhealth.usuario.response.UsuarioLogin;
 import com.example.myhealth.usuario.response.UsuarioResponse;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,8 +78,10 @@ public class UsuarioController {
         if (arquivo.isEmpty()) {
             return ResponseEntity.status(400).body("Arquivo não enviado");
         }
+        String image = Base64.getEncoder().encodeToString(arquivo.getBytes());
+        System.out.println(image);
         Usuario usuario = repository.getOne(idUsuario);
-        usuario.setAvatar(arquivo.getBytes().toString());
+        usuario.setAvatar(image);
         repository.save(usuario);
         return ResponseEntity.status(201).build();
     }
@@ -98,7 +103,8 @@ public class UsuarioController {
     public ResponseEntity getProdutoImagem2(@PathVariable int id) {
         Usuario imagemOptional = repository.getOne(id);
 
-        String imagem = imagemOptional.getAvatar();
+//        byte[] imagem = imagemOptional.getAvatar().getBytes();
+        byte[] imagem = Base64.getDecoder().decode(imagemOptional.getAvatar());
 
         if (imagemOptional != null) {
             return ResponseEntity.status(200).header("content-type", "image/jpg").body(imagem);
