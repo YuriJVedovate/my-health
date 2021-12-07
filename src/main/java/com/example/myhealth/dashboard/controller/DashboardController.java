@@ -69,7 +69,7 @@ public class DashboardController {
         LocalDateTime dtStart = data.atStartOfDay();
         LocalDateTime dtFinish = data.atTime(LocalTime.MAX);
 
-        if (repositoryUsuario.existsById(idUsuario)) {
+        if (!(data.isAfter(LocalDate.now()) && repositoryUsuario.existsById(idUsuario))) {
             Usuario user = repositoryUsuario.getOne(idUsuario);
             CaloriasDiaResponse response = new CaloriasDiaResponse();
 
