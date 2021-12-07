@@ -5,7 +5,6 @@ import com.example.myhealth.peso.Peso;
 import com.example.myhealth.peso.repository.PesoRepository;
 import com.example.myhealth.usuario.Usuario;
 import com.example.myhealth.usuario.repository.UsuarioRepository;
-import com.example.myhealth.usuario.request.ImageRequest;
 import com.example.myhealth.usuario.request.UserDto;
 import com.example.myhealth.usuario.response.UsuarioEdit;
 import com.example.myhealth.usuario.response.UsuarioLogin;
@@ -19,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Collections;
@@ -74,26 +72,15 @@ public class UsuarioController {
 
     // @CrossOrigin(origins = "http://54.173.23.9/")
     @PostMapping("/cadastrar-imagem")
-    public ResponseEntity postCadastrarImagem(@RequestParam("arquivo") MultipartFile arquivo, @RequestParam int idUsuario) throws IOException {
+    public ResponseEntity postCadastrarImagem(@RequestParam MultipartFile arquivo, @RequestParam int idUsuario) throws IOException {
         if (arquivo.isEmpty()) {
             return ResponseEntity.status(400).body("Arquivo não enviado");
         }
         String image = Base64.getEncoder().encodeToString(arquivo.getBytes());
         System.out.println(image);
         Usuario usuario = repository.getOne(idUsuario);
-        usuario.setAvatar(image);
-        repository.save(usuario);
-        return ResponseEntity.status(201).build();
-    }
+        usuario.setAvatar(arquivo.getBytes());
 
-    @PostMapping("/cadastrar-imagem-mobile")
-    public ResponseEntity postCadastrarImagem(@RequestParam int idUsuario, @RequestBody ImageRequest arquivo) throws IOException {
-        if (arquivo.getImagem().isEmpty()) {
-            return ResponseEntity.status(400).body("Arquivo não enviado");
-        }
-        Usuario usuario = repository.getOne(idUsuario);
-        System.out.println(arquivo.getImagem());
-        usuario.setAvatar(arquivo.getImagem());
         repository.save(usuario);
         return ResponseEntity.status(201).build();
     }
@@ -102,9 +89,7 @@ public class UsuarioController {
     @GetMapping("/imagem/{id}")
     public ResponseEntity getProdutoImagem2(@PathVariable int id) {
         Usuario imagemOptional = repository.getOne(id);
-
-//        byte[] imagem = imagemOptional.getAvatar().getBytes();
-        byte[] imagem = Base64.getDecoder().decode(imagemOptional.getAvatar());
+        byte[] imagem = imagemOptional.getAvatar();
 
         if (imagemOptional != null) {
             return ResponseEntity.status(200).header("content-type", "image/jpg").body(imagem);
