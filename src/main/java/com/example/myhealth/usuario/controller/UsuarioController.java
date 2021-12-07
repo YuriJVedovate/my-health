@@ -107,15 +107,27 @@ public class UsuarioController {
             usuarioPut.setEmail(usuario.getEmail());
             usuarioPut.setId(id);
 
+
             Peso peso = new Peso();
-            peso.setValor(usuario.getPeso());
+            peso.setValor(usuario.getPeso().doubleValue());
             peso.setDataCriacao(LocalDateTime.now());
             peso.setIdUsuario(id);
-
-            repository.save(usuarioPut);
             pesoRepository.save(peso);
+            repository.save(usuarioPut);
 
-            return ResponseEntity.status(200).body(usuarioPut);
+            Usuario user = new Usuario();
+            user.setIdUsuario(usuario.getIdUsuario());
+            user.setNome(usuario.getNome());
+            user.setSenha(usuario.getSenha());
+            user.setEmail(usuario.getEmail());
+            user.setPeso(usuario.getPeso());
+            user.setAltura(usuario.getAltura());
+            user.setAutenticado(usuario.getAutenticado());
+            user.setDataNascimento(usuario.getDataNascimento());
+            user.setAvatar(usuarioPut.getAvatar());
+            user.setTipoUsuario(usuario.getTipoUsuario());
+
+            return ResponseEntity.status(200).body(user);
         }
         return ResponseEntity.status(404).build();
     }
