@@ -22,7 +22,7 @@ public class Publicacao {
     @PositiveOrZero
     private Integer curtida = 0;
 
-    private String imagem;
+    private byte[] imagem;
 
     @Column(name = "data_publicacao")
     private LocalDateTime dataPublicacao;
@@ -86,11 +86,11 @@ public class Publicacao {
         TipoPublicacao = tipoPublicacao;
     }
 
-    public String getImagem() {
+    public byte[] getImagem() {
         return imagem;
     }
 
-    public void setImagem(String imagem) {
+    public void setImagem(byte[] imagem) {
         this.imagem = imagem;
     }
 }

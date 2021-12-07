@@ -69,7 +69,7 @@ public class DashboardController {
         LocalDateTime dtStart = data.atStartOfDay();
         LocalDateTime dtFinish = data.atTime(LocalTime.MAX);
 
-        if (!(data.isAfter(LocalDate.now()) && repositoryUsuario.existsById(idUsuario))) {
+        if (repositoryUsuario.existsById(idUsuario)) {
             Usuario user = repositoryUsuario.getOne(idUsuario);
             CaloriasDiaResponse response = new CaloriasDiaResponse();
 
@@ -94,7 +94,7 @@ public class DashboardController {
         LocalDateTime dtStart = dataInicio.atStartOfDay();
         LocalDateTime dtFinish = dataFim.atTime(LocalTime.MAX);
 
-        if (dataFim.isAfter(LocalDate.now()) && repositoryUsuario.existsById(idUsuario)) {
+        if (repositoryUsuario.existsById(idUsuario)) {
             return ResponseEntity.status(200).body(repositoryRefeicaoAlimento.somaCaloriasDia(dtStart, dtFinish, idUsuario));
         } else {
             return ResponseEntity.notFound().build();

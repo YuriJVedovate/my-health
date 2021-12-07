@@ -76,11 +76,8 @@ public class UsuarioController {
         if (arquivo.isEmpty()) {
             return ResponseEntity.status(400).body("Arquivo não enviado");
         }
-        String image = Base64.getEncoder().encodeToString(arquivo.getBytes());
-        System.out.println(image);
         Usuario usuario = repository.getOne(idUsuario);
         usuario.setAvatar(arquivo.getBytes());
-
         repository.save(usuario);
         return ResponseEntity.status(201).build();
     }

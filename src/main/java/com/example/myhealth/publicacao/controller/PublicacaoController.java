@@ -5,7 +5,6 @@ import com.example.myhealth.publicacao.Publicacao;
 import com.example.myhealth.publicacao.repository.PublicacaoRepository;
 import com.example.myhealth.publicacao.response.PublicacaoResponse;
 
-import com.example.myhealth.usuario.request.ImageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,32 +55,20 @@ public class PublicacaoController {
 
     // @CrossOrigin(origins = "http://54.173.23.9/")
     @PostMapping("/cadastrar-imagem")
-    public ResponseEntity postCadastrarImagem(@RequestParam("arquivo") MultipartFile arquivo, @RequestParam int idPublicacao) throws IOException {
+    public ResponseEntity postCadastrarImagem(@RequestParam MultipartFile arquivo, @RequestParam int idPublicacao) throws IOException {
         if (arquivo.isEmpty()) {
             return ResponseEntity.status(400).body("Arquivo não enviado");
         }
         Publicacao publicacao = repository.getOne(idPublicacao);
-        publicacao.setImagem(Base64.getEncoder().encodeToString(arquivo.getBytes()));
+        publicacao.setImagem(arquivo.getBytes());
         repository.save(publicacao);
         return ResponseEntity.status(201).build();
     }
-
-    @PostMapping("/cadastrar-imagem-mobile")
-    public ResponseEntity postCadastrarImagem(@RequestParam int idPublicacao, @RequestBody ImageRequest arquivo) throws IOException {
-        if (arquivo.getImagem().isEmpty()) {
-            return ResponseEntity.status(400).body("Arquivo não enviado");
-        }
-        Publicacao publicacao = repository.getOne(idPublicacao);
-        publicacao.setImagem(arquivo.getImagem());
-        repository.save(publicacao);
-        return ResponseEntity.status(201).build();
-    }
-
 
     @GetMapping("/imagem/{id}")
     public ResponseEntity getProdutoImagem2(@PathVariable int id) {
         Publicacao imagemOptional = repository.getOne(id);
-        byte[] imagem = Base64.getDecoder().decode(imagemOptional.getImagem());
+        byte[] imagem = imagemOptional.getImagem();
         if (imagemOptional != null) {
             return ResponseEntity.status(200).header("content-type", "image/jpg").body(imagem);
         }
